@@ -9,11 +9,6 @@ public class SQL {
 	private Kolize plugin;
 	private SQLdriver driver;
 	
-	private String HOST;
-	private String DB;
-	private String USER;
-	private String PASS;
-	
 	private Connection con;
 	private Statement st;
 	private String conName;
@@ -26,10 +21,10 @@ public class SQL {
 	}
 
 	public Boolean Connect(String host, String db, String user, String pass) {
-		this.HOST = host;
-		this.DB = db;
-		this.USER = user;
-		this.PASS = pass;
+		Utils.HOST = host;
+		Utils.DB = db;
+		Utils.USER = user;
+		Utils.PASS = pass;
 		this.driver = new SQLdriver(host, db, user, pass);
 		this.con = this.driver.open();
 		try {
