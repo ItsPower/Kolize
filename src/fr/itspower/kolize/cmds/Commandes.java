@@ -1,4 +1,4 @@
-package fr.itspower.kolize;
+package fr.itspower.kolize.cmds;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +13,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import fr.itspower.kolize.Kolize;
+import fr.itspower.kolize.Utils.Utils;
+import fr.itspower.kolize.types.Joueur;
 
 public class Commandes implements CommandExecutor {
 

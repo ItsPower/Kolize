@@ -1,4 +1,4 @@
-package fr.itspower.kolize;
+package fr.itspower.kolize.types;
 
 import org.bukkit.entity.Player;
 
@@ -7,12 +7,16 @@ public class Joueur implements Comparable<Joueur> {
 	private Player p;
 	private int kills;
 	private int eliminations;
+	private Etat etat;
 	//private int place;
 	
 	private byte vies = 2;
 	
 	public Joueur(Player p) {
-		this.p = p;
+		this.p =            p;
+		this.etat =         Etat.LOBBY;
+		this.kills =        0;
+		this.eliminations = 0;
 	}
 
 	public Player getPlayer() {
@@ -37,10 +41,10 @@ public class Joueur implements Comparable<Joueur> {
 		vies--;
 	}
 
+	// ordre croissant
 	@Override
 	public int compareTo(Joueur comparaison) {
 		int compareQuantity = comparaison.getPoints(); 
-		// ordre croissant
 		return compareQuantity - getPoints();
 	}
 
@@ -50,5 +54,13 @@ public class Joueur implements Comparable<Joueur> {
 
 	public int getKills() {
 		return kills;
+	}
+
+	public Etat getEtat() {
+		return etat;
+	}
+
+	public void setEtat(Etat etat) {
+		this.etat = etat;
 	}
 }

@@ -1,8 +1,11 @@
-package fr.itspower.kolize;
+package fr.itspower.kolize.sql;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import fr.itspower.kolize.Kolize;
+import fr.itspower.kolize.Utils.Utils;
 
 public class SQL {
 
@@ -13,6 +16,8 @@ public class SQL {
 	private Statement st;
 	private String conName;
 	private boolean connected;
+	
+	//TODO https://www.spigotmc.org/resources/mysql-api.16454/
 
 	public SQL(Kolize plugin, String name) {
 		this.plugin = plugin;

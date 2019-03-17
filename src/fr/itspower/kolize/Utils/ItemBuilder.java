@@ -1,4 +1,4 @@
-package fr.itspower.kolize;
+package fr.itspower.kolize.Utils;
 
 import java.util.ArrayList;
 import java.util.List;

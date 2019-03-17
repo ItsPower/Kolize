@@ -1,4 +1,4 @@
-package fr.itspower.kolize;
+package fr.itspower.kolize.sql;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

@@ -1,4 +1,4 @@
-package fr.itspower.kolize;
+package fr.itspower.kolize.evts;
 
 import java.util.Random;
 
@@ -14,6 +14,12 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+
+import fr.itspower.kolize.Kolize;
+import fr.itspower.kolize.Utils.ItemBuilder;
+import fr.itspower.kolize.Utils.Utils;
+import fr.itspower.kolize.types.Etat;
+import fr.itspower.kolize.types.Joueur;
 
 public class Events implements Listener {
 	
@@ -44,34 +50,30 @@ public class Events implements Listener {
 			Joueur attacker = Kolize.getK().getJoueur(e.getEntity().getKiller());
 			Joueur victim = Kolize.getK().getJoueur(e.getEntity());
 			
-			if(attacker == null || victim == null)
-				return;
-			
-			
-			if(victim.getVies() <= 0) {
-				attacker.addElimination();
-				Kolize.getK().removeJoueur(victim);
-				Bukkit.broadcastMessage(Kolize.PREFIXE+victim.getPlayer().getName()+"§7 est éliminé !");
+			if(attacker != null && victim != null) {
 				
-				if(Kolize.getK().getJoueurs().size() == 1) {
-					Kolize.task.cancel();
+				if(victim.getVies() <= 0) {
+					attacker.addElimination();
+					victim.setEtat(Etat.ELIMINE);
+					Bukkit.broadcastMessage(Kolize.PREFIXE+victim.getPlayer().getName()+"§7 est éliminé !");
 					
-					Bukkit.broadcastMessage("");
-					Bukkit.broadcastMessage(Kolize.PREFIXE+attacker.getPlayer().getName()+"§7 a remporté la partie !");
-					Bukkit.broadcastMessage("");
-					return;
+				} else {
+					attacker.addKill();
+					victim.reduireVie();
 				}
 				
-			} else {
-				attacker.addKill();
-				victim.reduireVie();
+				Bukkit.broadcastMessage(Kolize.PREFIXE+attacker.getPlayer().getName()+" §7a tué §f"+victim.getPlayer().getName()+"§7.");
+				
+				attacker.getPlayer().getInventory().addItem(new ItemBuilder(Material.SAND, 16, (short)0).build());
+				attacker.getPlayer().setHealth(Math.min(attacker.getPlayer().getMaxHealth(), attacker.getPlayer().getHealth()+6));
+				attacker.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1, 20*20));
 			}
-			
-			Bukkit.broadcastMessage(Kolize.PREFIXE+attacker.getPlayer().getName()+" §7a tué §f"+victim.getPlayer().getName()+"§7.");
-			
-			attacker.getPlayer().getInventory().addItem(new ItemBuilder(Material.SAND, 16, (short)0).build());
-			attacker.getPlayer().setHealth(Math.min(attacker.getPlayer().getMaxHealth(), attacker.getPlayer().getHealth()+6));
-			attacker.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1, 20*20));
+		}
+		
+		//TODO tous les joueurs doivent etre elim
+		if(Kolize.getK().getJoueurs().size() == 1) {
+			Kolize.getK().endGame();
+			return;
 		}
 	}
 	

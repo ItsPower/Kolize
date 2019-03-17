@@ -29,6 +29,11 @@ import org.bukkit.scheduler.BukkitTask;
 
 import com.google.common.io.ByteStreams;
 
+import fr.itspower.kolize.Utils.Utils;
+import fr.itspower.kolize.cmds.Commandes;
+import fr.itspower.kolize.evts.Events;
+import fr.itspower.kolize.types.Joueur;
+
 public class Kolize extends JavaPlugin {
 	
 	
@@ -41,8 +46,7 @@ public class Kolize extends JavaPlugin {
 	private boolean estEnCours;
 	public static int mapSize = 100;
 	private int id;
-
-	public static BukkitTask task;
+	private BukkitTask task;
 	
 	public static final int mapReduction = (int) (mapSize*0.05);
 	public static final String PREFIXE = "§3[§b§lKolize§3]§7 ";
@@ -151,6 +155,9 @@ public class Kolize extends JavaPlugin {
 	}
 
 	public void endGame() {
+		
+		Kolize.getK().getTask().cancel();
+		
 		Joueur[] top = new Joueur[joueurs.size()];
 		for(int i=0; i<joueurs.size(); i++) 
 			top[i] = new Joueur(joueurs.get(i).getPlayer());
@@ -197,7 +204,7 @@ public class Kolize extends JavaPlugin {
 	}
 
 	public void startGame() {
-		task = new BukkitRunnable() {
+		setTask(new BukkitRunnable() {
 			
 			private boolean reduction = true;
 			private Random genAlea = new Random();
@@ -228,7 +235,7 @@ public class Kolize extends JavaPlugin {
 				
 				time++;
 			}
-	    }.runTaskTimer(Kolize.getK(), 0, 20);
+	    }.runTaskTimer(Kolize.getK(), 0, 20));
 	}
 	
 	protected World getWorld() {
@@ -303,5 +310,9 @@ public class Kolize extends JavaPlugin {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public BukkitTask getTask() {
+		return task;
 	}
 }
