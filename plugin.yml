@@ -1,0 +1,10 @@
+main: fr.itspower.kolize.Kolize
+name: Kolize
+version: 1.0
+author: Its_Power
+depend: []
+load: POSTWORLD
+commands:
+    Kolize:
+        usage: /<command>
+        aliases: [k]
