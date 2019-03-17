@@ -45,7 +45,7 @@ public class Kolize extends JavaPlugin {
 	public static BukkitTask task;
 	
 	public static final int mapReduction = (int) (mapSize*0.05);
-	public static final String PREFIXE = "[Kolize] ";
+	public static final String PREFIXE = "§3[§b§lKolize§3]§7 ";
 
 	public void onEnable() {
 		plugin = this;
